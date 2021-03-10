@@ -1,6 +1,7 @@
 package com.example.android.customfancontroller
 
 import android.content.Context
+import android.graphics.PointF
 import android.util.AttributeSet
 import android.view.View
 
@@ -29,4 +30,9 @@ class DialView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+    //define several variables you need in order to draw the custom view
+    private var radius = 0.0f                   // Radius of the circle.
+    private var fanSpeed = FanSpeed.OFF         // The active selection.
+    // position variable which will be used to draw label and indicator circle position
+    private val pointPosition: PointF = PointF(0.0f, 0.0f)
 }
