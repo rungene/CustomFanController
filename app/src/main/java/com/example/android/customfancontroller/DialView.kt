@@ -14,6 +14,11 @@ private enum class FanSpeed(val label: Int) {
     HIGH(R.string.fan_high);
 }
 
+//add these constants. You'll use these as part of drawing the dial indicators and labels.
+
+private const val RADIUS_OFFSET_LABEL = 30
+private const val RADIUS_OFFSET_INDICATOR = -35
+
 
 
 /*Android Studio adds the constructor from the View class. The @JvmOverloads annotation
