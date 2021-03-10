@@ -4,7 +4,15 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 
+/*add a top-level enum to represent the available fan speeds. Note that this enum is of
+type Int because the values are string resources rather than actual strings.*/
 
+private enum class FanSpeed(val label: Int) {
+    OFF(R.string.fan_off),
+    LOW(R.string.fan_low),
+    MEDIUM(R.string.fan_medium),
+    HIGH(R.string.fan_high);
+}
 
 
 
