@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.withStyledAttributes
 import kotlin.math.min
 import kotlin.math.cos
 import kotlin.math.sin
@@ -51,6 +52,13 @@ class DialView @JvmOverloads constructor(
     // position variable which will be used to draw label and indicator circle position
     private val pointPosition: PointF = PointF(0.0f, 0.0f)
 
+
+//declare variables to cache the attribute values.
+    private var fanSpeedLowColor = 0
+    private var fanSpeedMediumColor = 0
+    private var fanSeedMaxColor = 0
+
+
     //initialize a Paint object with a handful of basic styles.
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -63,6 +71,14 @@ class DialView @JvmOverloads constructor(
     //Setting the view's isClickable property to true enables that view to accept user input
     init {
         isClickable = true
+
+        //supply the attributes and view, and and set your local variables.
+        //use withStyledAttributes extension function
+        context.withStyledAttributes(attrs, R.styleable.DialView) {
+            fanSpeedLowColor = getColor(R.styleable.DialView_fanColor1, 0)
+            fanSpeedMediumColor = getColor(R.styleable.DialView_fanColor2, 0)
+            fanSeedMaxColor = getColor(R.styleable.DialView_fanColor3, 0)
+        }
     }
 
     override fun performClick(): Boolean {
@@ -103,7 +119,14 @@ class DialView @JvmOverloads constructor(
         super.onDraw(canvas)
 
         // Set dial background color to green if selection not off.
-        paint.color = if (fanSpeed == FanSpeed.OFF) Color.GRAY else Color.GREEN
+       // paint.color = if (fanSpeed == FanSpeed.OFF) Color.GRAY else Color.GREEN
+     //using the  local variables set the dial color based on the current fan speed.
+        paint.color = when (fanSpeed) {
+            FanSpeed.OFF -> Color.GRAY
+            FanSpeed.LOW -> fanSpeedLowColor
+            FanSpeed.MEDIUM -> fanSpeedMediumColor
+            FanSpeed.HIGH -> fanSeedMaxColor
+        } as Int
        // to draw a circle for the dial, with the drawCircle() method
         // Draw the dial.
         canvas.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), radius, paint)
@@ -128,6 +151,8 @@ class DialView @JvmOverloads constructor(
             val label = resources.getString(i.label)
             canvas.drawText(label, pointPosition.x, pointPosition.y, paint)
         }
+
+
 
     }
 
